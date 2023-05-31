@@ -16,6 +16,30 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
+  {
+    path: "/books",
+    name: "Books",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/BooksView.vue"),
+  },
+  {
+    path: "/books/:isbn",
+    name: "BookDetails",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/BookDetailsView.vue"),
+  },
+  {
+    path: "/books/addBook",
+    name: "addBook",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/AddBookView.vue"),
+  },
+  {
+    path: "/books/editBook",
+    name: "editBook",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/EditBookView.vue"),
+  },
 ];
 
 const router = createRouter({
