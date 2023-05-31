@@ -19,10 +19,12 @@
         <td>{{ book.title }}</td>
         <td>{{ book.isbn }}</td>
         <td>
-          <router-link
-            :to="{ name: 'BookDetails', params: { isbn: book.isbn } }"
-            >Details
-          </router-link>
+          <div v-if="book.isbn">
+            <router-link
+              :to="{ name: 'BookDetails', params: { isbn: book.isbn } }"
+              >Details
+            </router-link>
+          </div>
         </td>
       </tr>
     </tbody>
