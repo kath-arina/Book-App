@@ -35,7 +35,7 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/AddBookView.vue"),
   },
   {
-    path: "/books/editBook",
+    path: "/books/edit/:isbn",
     name: "editBook",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/EditBookView.vue"),

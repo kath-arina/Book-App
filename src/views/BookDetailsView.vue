@@ -1,4 +1,5 @@
 <template>
+  <button><router-link :to="{ name: 'Books' }">Back</router-link></button>
   <h1>Book details</h1>
   <button id="edit">
     <router-link :to="{ name: 'editBook', params: { isbn: book.isbn } }"
