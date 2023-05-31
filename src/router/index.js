@@ -29,13 +29,13 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/BookDetailsView.vue"),
   },
   {
-    path: "/books/addBook",
+    path: "/books/add-book",
     name: "addBook",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AddBookView.vue"),
   },
   {
-    path: "/books/edit/:isbn",
+    path: "/books/:isbn/edit",
     name: "editBook",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/EditBookView.vue"),
