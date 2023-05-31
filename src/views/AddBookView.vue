@@ -22,12 +22,7 @@
     <input type="text" name="ISBN" v-model="book.isbn" />
   </div>
 
-  <button @click="addNewBook">
-    <!-- <router-link :to="{ name: 'BookDetails', params: { isbn: book.isbn } }"
-      >Add New Book</router-link
-    > -->
-    Safe
-  </button>
+  <button @click="addNewBook">Add Book</button>
 </template>
 
 <script>
@@ -58,11 +53,10 @@ export default {
         .then((newBook) => {
           console.log("New Book saved:", newBook);
 
-          //   this.$router.push({
-          //     name: "BookDetails",
-          //     params: { isbn: newBook.isbn }, // hier kann auch updatedBook.isbn stehen
-          //   });
-          //   this.$router.go(0);
+          this.$router.push({
+            name: "BookDetails",
+            params: { isbn: newBook.isbn },
+          });
         })
         .catch((error) => {
           console.error("Error adding new book:", error);

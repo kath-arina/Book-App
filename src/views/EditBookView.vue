@@ -21,11 +21,8 @@
   <div>Price:<input type="text" name="price" v-model="book.price" /></div>
   <div>ISBN:<input type="text" name="ISBN" v-model="book.isbn" /></div>
 
-  <button @click="saveChanges">
-    <router-link :to="{ name: 'BookDetails', params: { isbn: book.isbn } }"
-      >Save Changes</router-link
-    >
-  </button>
+  <!-- Hier wird kein router-Link benötigt -->
+  <button @click="saveChanges">Save Changes</button>
 </template>
 
 <script>
@@ -58,7 +55,6 @@ export default {
             name: "BookDetails",
             params: { isbn: this.book.isbn }, // hier kann auch updatedBook.isbn stehen
           });
-          this.$router.go(0);
         })
         .catch((error) => {
           console.error("Error saving changes:", error);
