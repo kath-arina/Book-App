@@ -21,7 +21,11 @@
   <div>Price:<input type="text" name="price" v-model="book.price" /></div>
   <div>ISBN:<input type="text" name="ISBN" v-model="book.isbn" /></div>
 
-  <button @click="saveChanges">Save Changes</button>
+  <button @click="saveChanges">
+    <router-link :to="{ name: 'BookDetails', params: { isbn: book.isbn } }"
+      >Save Changes</router-link
+    >
+  </button>
 </template>
 
 <script>
@@ -38,7 +42,28 @@ export default {
       .then((book) => (this.book = book));
   },
   methods: {
-    saveChanges() {},
+    saveChanges() {
+      fetch("http://localhost:4730/books/" + this.$route.params.isbn, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.book),
+      })
+        .then((res) => res.json())
+        .then((updatedBook) => {
+          console.log("Changes saved:", updatedBook);
+
+          this.$router.push({
+            name: "BookDetails",
+            params: { isbn: this.book.isbn }, // hier kann auch updatedBook.isbn stehen
+          });
+          this.$router.go(0);
+        })
+        .catch((error) => {
+          console.error("Error saving changes:", error);
+        });
+    },
   },
 };
 </script>
