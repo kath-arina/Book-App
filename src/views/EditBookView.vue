@@ -5,7 +5,7 @@
     >
   </button>
 
-  <AddEditBook />
+  <AddEditBook :id="this.$route.params.id" />
 </template>
 
 <script>

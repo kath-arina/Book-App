@@ -20,9 +20,8 @@
         <td>{{ book.title }}</td>
         <td>{{ book.isbn }}</td>
         <td>
-          <div v-if="book.isbn">
-            <router-link
-              :to="{ name: 'BookDetails', params: { isbn: book.isbn } }"
+          <div v-if="book.id">
+            <router-link :to="{ name: 'BookDetails', params: { id: book.id } }"
               >Details
             </router-link>
           </div>
@@ -74,6 +73,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  color: rgb(69, 68, 68);
 }
 
 h1 {
@@ -81,13 +81,13 @@ h1 {
   margin-left: 2rem;
   flex-grow: 1;
 }
-
-#addBtn {
+button {
   background: rgb(252, 226, 186);
+  color: rgb(84, 84, 84);
   padding: 7px 20px;
   border-radius: 8px;
   box-shadow: 2px 3px 2px 2px rgb(252, 226, 186);
-  border: 4px solid salmon;
+  border: 2px solid salmon;
   font-size: 1rem;
   font-weight: 600;
 }
@@ -96,9 +96,10 @@ table {
   table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
-  border: 3px solid rgb(0, 0, 0);
-  background: rgb(252, 226, 186);
-  border-radius: 1rem;
+  border: 2px solid rgb(69, 68, 68);
+  box-shadow: 5px 5px lightgrey;
+  background: rgb(255, 252, 249);
+  border-radius: 10px;
 }
 
 thead th:nth-child(1) {
@@ -118,29 +119,23 @@ thead th:nth-child(4) {
 
 th,
 td {
-  padding: 10px;
+  padding: 8px;
 }
 tbody td {
   text-align: center;
 }
 thead {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.405);
   color: rgba(255, 235, 205, 0.919);
-  text-shadow: 1px 1px 1px black;
+  text-shadow: 1px 1px 1px salmon;
   font-size: 1.5rem;
 }
 tbody {
   background: rgba(255, 255, 255, 0.2);
 }
-tbody tr:nth-child(odd) {
-  background-color: rgba(255, 235, 205, 0.919);
-}
 
-tbody tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.55);
-}
 tr > td:hover {
-  background-color: rgba(255, 140, 105, 0.8);
+  background-color: rgba(255, 140, 105, 0.626);
 }
 
 #deleteBtn {

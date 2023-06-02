@@ -2,16 +2,18 @@
   <button><router-link :to="{ name: 'Books' }">Back</router-link></button>
   <h1>Book details</h1>
   <button id="edit">
-    <router-link :to="{ name: 'editBook', params: { isbn: book.isbn } }"
+    <router-link :to="{ name: 'editBook', params: { id: book.id } }"
       >Edit</router-link
     >
   </button>
   <h2>{{ book.title }} - {{ book.author }}</h2>
   <p>{{ book.abstract }}</p>
+  <img :src="book.cover" />
   <div>
     Price:<strong>{{ book.price }}</strong>
   </div>
   <div>ISBN:{{ book.isbn }}</div>
+  <input type="hidden" name="hidden-ID" :value="book.id" />
 </template>
 
 <script>
@@ -24,7 +26,7 @@ export default {
   },
 
   created() {
-    fetch("http://localhost:4730/books/" + this.$route.params.isbn)
+    fetch("http://localhost:4730/books/" + this.$route.params.id)
       .then((res) => res.json())
       .then((book) => (this.book = book));
   },
