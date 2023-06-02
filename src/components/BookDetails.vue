@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: "BookDetailsView",
+  name: "BookDetails",
   data() {
     return {
       book: {},

@@ -10,11 +10,10 @@
 
   <table class="table-item__table">
     <thead>
-      <tr>
-        <th class="table-item__table-head-name">Name</th>
-        <th class="table-item__table-head--isbn">ISBN</th>
-        <th class="th.table-item__table-head--action">Details</th>
-      </tr>
+      <th class="table-item__table-head-name">Name</th>
+      <th class="table-item__table-head--isbn">ISBN</th>
+      <th>Details</th>
+      <th>Delete</th>
     </thead>
     <tbody>
       <tr v-for="book in books" :key="book.id">
@@ -27,6 +26,9 @@
               >Details
             </router-link>
           </div>
+        </td>
+        <td>
+          <button @click="deleteBook(book.isbn)" id="deleteBtn">🗑️</button>
         </td>
       </tr>
     </tbody>
@@ -42,9 +44,26 @@ export default {
     };
   },
   created() {
-    fetch("http://localhost:4730/books")
-      .then((res) => res.json())
-      .then((books) => (this.books = books));
+    this.fetchBooks();
+  },
+  methods: {
+    fetchBooks() {
+      fetch("http://localhost:4730/books")
+        .then((res) => res.json())
+        .then((books) => (this.books = books));
+    },
+    deleteBook(isbn) {
+      fetch("http://localhost:4730/books/" + isbn, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then(() => {
+          this.fetchBooks();
+        });
+    },
   },
 };
 </script>
@@ -83,7 +102,7 @@ table {
 }
 
 thead th:nth-child(1) {
-  width: 50%;
+  width: 40%;
 }
 
 thead th:nth-child(2) {
@@ -92,6 +111,9 @@ thead th:nth-child(2) {
 
 thead th:nth-child(3) {
   width: 20%;
+}
+thead th:nth-child(4) {
+  width: 10%;
 }
 
 th,
@@ -118,6 +140,11 @@ tbody tr:nth-child(even) {
   background-color: rgba(255, 255, 255, 0.55);
 }
 tr > td:hover {
-  background-color: rgb(244, 244, 191);
+  background-color: rgba(255, 140, 105, 0.8);
+}
+
+#deleteBtn {
+  border: none;
+  background: transparent;
 }
 </style>

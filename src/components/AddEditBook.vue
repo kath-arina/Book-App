@@ -1,11 +1,5 @@
 <template>
-  <button>
-    <router-link :to="{ name: 'BookDetails', params: { isbn: book.isbn } }"
-      >Back</router-link
-    >
-  </button>
-
-  <h1>Book details</h1>
+  <h1>{{ heading }}</h1>
   <div>
     Title:
     <input type="text" name="title" v-model="book.title" />
@@ -21,24 +15,48 @@
   <div>Price:<input type="text" name="price" v-model="book.price" /></div>
   <div>ISBN:<input type="text" name="ISBN" v-model="book.isbn" /></div>
 
-  <!-- Hier wird kein router-Link benötigt -->
-  <button @click="saveChanges">Save Changes</button>
+  <button @click="detectOrigin">{{ buttonText }}</button>
+  <div>hello{{ this.book.isbn }}</div>
+  <div>hello{{ this.heading }}</div>
 </template>
 
 <script>
 export default {
-  name: "EditBookView",
+  name: "AddEditBook",
   data() {
     return {
-      book: {},
+      book: {
+        title: "",
+        author: "",
+        abstract: "",
+        price: "",
+        isbn: "",
+        cover: "",
+      },
     };
   },
+  computed: {
+    heading() {
+      return this.book.isbn === "" ? "add new Book" : "edit Book";
+    },
+    buttonText() {
+      return this.book.isbn === "" ? "add book" : "save changes";
+    },
+  },
+  components: {},
   created() {
     fetch("http://localhost:4730/books/" + this.$route.params.isbn)
       .then((res) => res.json())
       .then((book) => (this.book = book));
   },
   methods: {
+    detectOrigin() {
+      if (this.buttonText === "add book") {
+        this.addNewBook();
+      } else {
+        this.saveChanges();
+      }
+    },
     saveChanges() {
       fetch("http://localhost:4730/books/" + this.$route.params.isbn, {
         method: "PUT",
@@ -60,26 +78,28 @@ export default {
           console.error("Error saving changes:", error);
         });
     },
+
+    addNewBook() {
+      fetch("http://localhost:4730/books/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.book),
+      })
+        .then((res) => res.json())
+        .then((newBook) => {
+          console.log("New Book saved:", newBook);
+
+          this.$router.push({
+            name: "BookDetails",
+            params: { isbn: newBook.isbn },
+          });
+        })
+        .catch((error) => {
+          console.error("Error adding new book:", error);
+        });
+    },
   },
 };
 </script>
-
-<style scoped>
-input {
-  min-width: 20rem;
-}
-
-#abstract {
-  min-height: 5rem;
-}
-
-button {
-  background: rgb(252, 226, 186);
-  padding: 7px 20px;
-  border-radius: 8px;
-  box-shadow: 2px 3px 2px 2px rgb(252, 226, 186);
-  border: 4px solid salmon;
-  font-size: 1rem;
-  font-weight: 600;
-}
-</style>
